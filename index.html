@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Config.h Editor RS41HUP-V2 by 9A4AM@2024</title>
+</head>
+<body>
+    <body style="background-color:powderblue;">
+    <h1>Edit Config.h RS41HUP-V2 by 9A4AM@2024</h1>
+    <textarea id="configContent" rows="20" cols="80"></textarea>
+    <br>
+    <button onclick="saveConfig()">Save</button>
+    <button onclick="compileProject()">Compile</button>
+    <br><br>
+    <a id="downloadLink" href="/download" style="display:none;">Download Config.h</a>
+    <a id="downloadHexLink" href="/download-hex" style="display:none;">Download Hex</a>
+    <script>
+        window.onload = function() {
+            loadConfig();
+        }
+
+        function loadConfig() {
+            fetch('/load-config')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.content) {
+                        document.getElementById('configContent').value = data.content;
+                    } else if (data.error) {
+                        alert('Error loading config: ' + data.error);
+                    }
+                });
+        }
+
+        function saveConfig() {
+            const content = document.getElementById('configContent').value;
+            fetch('/save-config', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ content: content })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                } else if (data.error) {
+                    alert('Error saving config: ' + data.error);
+                }
+            });
+        }
+
+        function compileProject() {
+            fetch('/compile', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        document.getElementById('downloadLink').style.display = 'inline';
+                        document.getElementById('downloadHexLink').style.display = 'inline';
+                        alert(data.message);
+                    } else if (data.status === 'error') {
+                        alert('Error during compilation: ' + data.error);
+                    }
+                });
+        }
+    </script>
+</body>
+</html>
