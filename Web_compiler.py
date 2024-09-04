@@ -18,9 +18,9 @@ import datetime
 app = Flask(__name__)
 
 # Putanje do config.h i drugih datoteka
-CONFIG_FILE_PATH = r'C:\Users\9A4AM\Desktop\RS41HUP_V2-9A4AM\config.h'
-HEX_FILE_PATH = r'C:\Users\9A4AM\Desktop\RS41HUP_V2-9A3BFT\RS41HUP\Debug\bin\RS41HUP.hex'
-BATCH_FILE_PATH = r'C:\Users\9A4AM\Desktop\Online compiler\compile.exe'
+CONFIG_FILE_PATH = r'C:\path\to\your\project\config.h'
+HEX_FILE_PATH = r'C:\path\to\your\project\build\output.hex'
+BATCH_FILE_PATH = r'C:\path\to\your\compile_project.bat'
 
 # Globalne varijable za praćenje aktivnog korisnika i vremena zadnje aktivnosti
 active_user = None
